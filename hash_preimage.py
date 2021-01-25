@@ -18,7 +18,7 @@ import string
 import random
 
 
-# In[ ]:
+# In[2]:
 
 
 def randomString(N):
@@ -26,19 +26,7 @@ def randomString(N):
   
 
 
-# In[4]:
-
-
-def my_to_bin(string):
-    res = ''
-    for char in string:
-        tmp = (bin(int(char,16))[2:])
-        tmp = '%08d' %int(tmp)
-        res += tmp
-    return res
-
-
-# In[7]:
+# In[3]:
 
 
 def hash_preimage(target_string):
@@ -59,28 +47,26 @@ def hash_preimage(target_string):
     for i in range(N):
         x_int = x_int+1
         x_str = str(x_int)
-        x_hex = hashlib.sha256(x_str.encode('utf-8')).hexdigest()
-        x_binary = my_to_bin(x_hex)
+        x_binary = bin(int(hashlib.sha256(x_str.encode('utf-8')).hexdigest(),16))
         last_k_digits = x_binary[-k:]
         
         if str(last_k_digits) == target_string:
-            return(x_int)
+            return(x_str)
         
     return( nonce )
+
+
+# In[4]:
+
+
+target_string = "1011111"
+myx = hash_preimage(target_string)
 
 
 # In[8]:
 
 
-target_string = "101"
-hash_preimage(target_string)
-
-
-# In[18]:
-
-
-x_tr = str(83)
-my_to_bin(hashlib.sha256(x_tr.encode('utf-8')).hexdigest())
+bin(int(hashlib.sha256(myx.encode('utf-8')).hexdigest(),16))
 
 
 # In[ ]:
